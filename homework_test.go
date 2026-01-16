@@ -9,7 +9,7 @@ import (
 // go test -v homework_test.go
 
 func ToLittleEndian(number uint32) uint32 {
-	return 0 // need to implement
+	return (number&0x000000FF)<<24 | (number&0x0000FF00)<<8 | (number&0x00FF0000)>>8 | (number&0xFF000000)>>24
 }
 
 func TestСonversion(t *testing.T) {
@@ -37,6 +37,10 @@ func TestСonversion(t *testing.T) {
 			number: 0x01020304,
 			result: 0x04030201,
 		},
+		"test case #6": {
+			number: 0x12345678,
+			result: 0x78563412,
+		},
 	}
 
 	for name, test := range tests {
@@ -45,4 +49,8 @@ func TestСonversion(t *testing.T) {
 			assert.Equal(t, test.result, result)
 		})
 	}
+}
+
+func main() {
+	ToLittleEndian(0x123)
 }
